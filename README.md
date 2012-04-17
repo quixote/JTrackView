@@ -5,6 +5,10 @@ Copyright © 2012, Jeremy Tregunna, All Rights Reserved.
 
 JTrackView is a UI component similar in nature to a UITableView which allows for scrolling a list of items in a horizontal manner rather than a vertical manner such as with a UITableView. It is intended to be very lightweight, and performance has been measured on an iPhone 4 at a worst case of 55 fps with a non-trivial set of opaque subviews. In other words, it scrolls like butter.
 
+## Here be dragons
+
+Seriously though, this view uses ARC, and weak links, so it will work on iOS 4.x, but you'll need [PLWeakCompatibility](https://github.com/plausiblelabs/PLWeakCompatibility), or iOS 5.x.
+
 ## Using
 
 To use JTrackView, add these files to your project, ensure the `JTrackView.m` and `JTrackViewCell.m` files are in your compile build phase.
