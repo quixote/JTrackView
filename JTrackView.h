@@ -11,13 +11,14 @@
 @class JTrackView, JTrackViewCell;
 
 @protocol UCTrackViewDataSource
+@optional
 - (NSUInteger)numberOfPagesInTrackView:(JTrackView*)trackView;
 - (CGFloat)pageWidthInTrackView:(JTrackView*)trackView;
 - (JTrackViewCell*)trackView:(JTrackView*)trackView cellForPageAtIndex:(NSUInteger)index;
 @end
 
 @interface JTrackView : UIScrollView
-@property (nonatomic, weak) id<UCTrackViewDataSource> dataSource;
+@property (nonatomic, weak) IBOutlet id<UCTrackViewDataSource, NSObject> dataSource;
 @property (nonatomic, strong) UIPageControl* pageControl;
 
 - (JTrackViewCell*)dequeueReusableCellWithIdentifier:(NSString*)identifier;

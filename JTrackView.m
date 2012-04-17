@@ -96,8 +96,11 @@
 {
     // Calculate which pages are visible
     CGRect visibleBounds = self.bounds;
+    int numberOfPages = 0;
+    if([self.dataSource respondsToSelector:@selector(numberOfPagesInTrackView:)])
+        numberOfPages = [self.dataSource numberOfPagesInTrackView:self];
     int firstPageIndex = MAX(floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds)), 0);
-    int lastPageIndex  = MIN(floorf((CGRectGetMaxX(visibleBounds) - 1) / CGRectGetWidth(visibleBounds)), [self.dataSource numberOfPagesInTrackView:self] - 1);
+    int lastPageIndex  = MIN(floorf((CGRectGetMaxX(visibleBounds) - 1) / CGRectGetWidth(visibleBounds)), numberOfPages - 1);
     
     // Recycle no-longer-visible pages 
     for(JTrackViewCell* cell in self.visibleCells)
@@ -113,7 +116,7 @@
     // add missing cells
     for(int index = firstPageIndex; index <= lastPageIndex; index++)
     {
-        if(![self isDisplayingCellAtIndex:index])
+        if(![self isDisplayingCellAtIndex:index] && [self.dataSource respondsToSelector:@selector(trackView:cellForPageAtIndex:)])
         {
             JTrackViewCell* cell = [self.dataSource trackView:self cellForPageAtIndex:index];
             cell.frame = [self frameForCellAtIndex:index];
