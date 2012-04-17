@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableSet* recycledCells;
 @property (nonatomic, strong) NSMutableSet* visibleCells;
 - (void)commonInitialization;
+- (CGSize)contentSizeForTrackView;
 @end
 
 @implementation JTrackView
@@ -51,6 +52,19 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (CGSize)contentSizeForTrackView
+{
+    CGRect bounds = self.bounds;
+    
+    if([self.dataSource respondsToSelector:@selector(numberOfPagesInTrackView:)])
+    {
+        CGSize size = CGSizeMake(bounds.size.width * [self.dataSource numberOfPagesInTrackView:self], bounds.size.height);
+        return size;
+    }
+    else
+        return bounds.size;
 }
 
 #pragma mark - Dealing with reusable cells
@@ -125,6 +139,28 @@
             [self.visibleCells addObject:cell];
         }
     }
+}
+
+#pragma mark - Overrides for laying out cells
+
+- (void)setContentOffset:(CGPoint)contentOffset
+{
+    [super setContentOffset:contentOffset];
+    [self layoutCells];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self layoutCells];
+}
+
+- (void)setDataSource:(id<UCTrackViewDataSource,NSObject>)ds
+{
+    if(dataSource == ds)
+        return;
+    dataSource = ds;
+    self.contentSize = [self contentSizeForTrackView];
 }
 
 #pragma mark - Low memory conditions
