@@ -106,7 +106,7 @@
     return cell;
 }
 
-- (void)layoutCells
+- (void)layoutSubviews
 {
     // Calculate which pages are visible
     CGRect visibleBounds = self.bounds;
@@ -146,13 +146,13 @@
 - (void)setContentOffset:(CGPoint)contentOffset
 {
     [super setContentOffset:contentOffset];
-    [self layoutCells];
+    [self setNeedsLayout];
 }
 
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [self layoutCells];
+    [self setNeedsLayout];
 }
 
 - (void)setDataSource:(id<UCTrackViewDataSource,NSObject>)ds

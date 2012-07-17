@@ -23,6 +23,5 @@
 
 - (JTrackViewCell*)dequeueReusableCellWithIdentifier:(NSString*)identifier;
 - (CGRect)frameForCellAtIndex:(NSUInteger)index;
-- (void)layoutCells;
 
 @end
