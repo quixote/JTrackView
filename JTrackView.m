@@ -98,7 +98,7 @@
         // All cells must have the same height.
         CGRect cellFrame = [self frameForCellAtIndex:0];
         // Create a new cell if we don't have one. Save the caller from doing it.
-        cell = [[JTrackViewCell alloc] initWithFrame:cellFrame];
+        cell = [[JTrackViewCell alloc] initWithFrame:cellFrame reuseIdentifier:identifier];
     }
     else
         [self.recycledCells removeObject:cell];
